@@ -2,7 +2,7 @@
 
 高效、安全、可控的邮件群发工具，多发件人轮发 + 反垃圾优化，适用于营销通知、活动推广、客户触达等场景。
 
-![MailPro 界面截图](https://raw.githubusercontent.com/ChainHe/mailpro/main/img/mail1.png)
+![MailPro 界面截图](./img/mail1.png)
 
 ## 下载
 
