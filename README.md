@@ -6,9 +6,8 @@
 
 ## 下载
 
-前往 [Releases](../../releases) 下载最新版本：
-- **Windows**：`MailPro.exe`，双击运行
-- **macOS**：`MailPro-macOS.zip`，解压后运行
+- **Windows**：下载仓库中的 `MailPro.exe`，双击运行
+- **macOS**：暂未提供，敬请期待
 
 ## 激活
 
