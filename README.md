@@ -23,7 +23,7 @@
 
 #### 多平台发送
 
-支持 QQ / 163 / Gmail / Outlook / Hotmail 多邮箱平台 SMTP 发送，多发件人轮询或随机策略分散压力。
+支持 QQ / Foxmail / 163 / 126 / 阿里云 / 新浪 / Gmail / Outlook / Hotmail / Yahoo / iCloud 共 11 种邮箱 SMTP 发送。多发件人轮询或随机策略分散压力。
 
 ![发件人管理](./img/mail2.png)
 
@@ -33,10 +33,12 @@
 
 | 邮箱 | 建议日限额 | BCC 每组上限 |
 |------|-----------|-------------|
-| QQ | 200-500 | 50 |
-| 163 | 100-200 | 40 |
+| QQ / Foxmail | 200-500 | 50 |
+| 163 / 126 | 100-200 | 40 |
 | Gmail | 500 | 100 |
-| Outlook | 300 | 500 |
+| Outlook / Hotmail | 300 | 500 |
+| Yahoo | 500 | 50 |
+| iCloud | 200 | 50 |
 
 #### 模板个性化
 
@@ -59,31 +61,49 @@
 - 新发件人自动预热，避免触发风控
 - 检测到限频自动降速，保护发件人信誉
 - 每个发件人独立配置每日发送上限
+- 单发件人冷却机制，防止过度使用
 
 #### 收件人管理
 
 - 从 TXT / CSV 文件批量导入
 - 邮箱格式 + 域名 DNS 预验证
-- 自动过滤临时邮箱（一次性邮箱域名）
+- 自动过滤临时邮箱（40+ 一次性邮箱域名）
 - 收件人自动去重
 - 退信地址自动记录，下次跳过
+
+#### QQ 群邮箱采集
+
+通过 NapCatQQ 连接 QQ，一键获取群成员列表并自动转为 QQ 邮箱，直接导入发送列表。
+
+- 支持获取群列表、群成员
+- 显示昵称、群名片、角色、最后发言时间
+- 一键导入到发送页面
+- 复制全部成员信息到剪贴板
+- 内置 NapCat 使用指南
+
+> ⚠️ **NapCat 配置注意事项：**
+> 1. 网络配置选择「Websocket Server」（正向 WebSocket）
+> 2. Host 填 `127.0.0.1`，端口填 `3001`
+> 3. **Token 必须留空**，否则连接会被拒绝（错误码 1005）
+> 4. 消息格式选 `Array`
+> 5. 配置保存后，MailPro 中 WebSocket 地址填 `ws://127.0.0.1:3001`
 
 ![日志](./img/mail4.png)
 
 #### 其他功能
 
-- 发送进度条 + 实时日志
+- 发送进度条 + 实时日志（含发件人标记）
 - 发送结果导出（CSV）
 - 日志导出
-- 发件人连接测试
-- 发件人编辑 / 删除
+- 发件人连接测试 / 编辑 / 删除
 - Termius Dark 风格界面
+- 自定义弹窗，统一视觉
 
 ### 使用说明
 
 1. 首次运行输入激活码
-2. 在「发件人」页面添加 SMTP 发件人（需要邮箱授权码）
-3. 在「发送邮件」页面输入或导入收件人
+2. 在「发件管理」页面添加 SMTP 发件人（需要邮箱授权码）
+3. 在「邮件发送」页面输入或导入收件人
 4. 填写主题和正文（支持 HTML 和模板变量）
 5. 选择发送策略和模式，点击发送
 
@@ -115,20 +135,13 @@ An activation code is required on first launch. Follow the WeChat official accou
 
 #### Multi-Platform Sending
 
-Supports QQ / 163 / Gmail / Outlook / Hotmail via SMTP. Multiple sender accounts with round-robin or random rotation strategy.
+Supports 11 email providers: QQ / Foxmail / 163 / 126 / Aliyun / Sina / Gmail / Outlook / Hotmail / Yahoo / iCloud. Multiple sender accounts with round-robin or random rotation.
 
 ![Sender Management](./img/mail2.png)
 
 #### BCC Batch Mode
 
-Send to multiple recipients in a single SMTP transaction for maximum efficiency. Auto-adapts group size per provider:
-
-| Provider | Daily Limit | BCC Group Size |
-|----------|-------------|----------------|
-| QQ | 200-500 | 50 |
-| 163 | 100-200 | 40 |
-| Gmail | 500 | 100 |
-| Outlook | 300 | 500 |
+Send to multiple recipients in a single SMTP transaction for maximum efficiency. Auto-adapts group size per provider.
 
 #### Template Personalization
 
@@ -146,44 +159,61 @@ Subject and body support template variables for automatic content differentiatio
 #### Anti-Spam Optimization
 
 - Complete email headers (Message-ID / Date / Reply-To)
-- List-Unsubscribe header for one-click unsubscribe in Gmail/Outlook
+- List-Unsubscribe header for one-click unsubscribe
 - Randomized sending intervals
 - Auto warm-up for new senders
 - Auto throttle on rate-limit detection
-- Per-sender daily send limits
+- Per-sender daily limits and cooldown
 
 #### Recipient Management
 
 - Bulk import from TXT / CSV files
 - Email format + domain DNS validation
-- Auto-filter disposable/temporary emails
+- Auto-filter 40+ disposable email domains
 - Auto deduplication
 - Hard bounce tracking and auto-skip
+
+#### QQ Group Email Collection
+
+Connect to QQ via NapCatQQ, fetch group members and auto-convert to QQ email addresses.
+
+- Fetch group list and members via WebSocket
+- Display nickname, card, role, last active time
+- One-click import to send page
+- Copy all member data to clipboard
+- Built-in NapCat setup guide
+
+> ⚠️ **NapCat Configuration Notes:**
+> 1. Network config: select "Websocket Server" (forward WebSocket)
+> 2. Host: `127.0.0.1`, Port: `3001`
+> 3. **Token must be empty**, otherwise connection will be refused (error 1005)
+> 4. Message format: `Array`
+> 5. In MailPro, set WebSocket address to `ws://127.0.0.1:3001`
 
 ![Logs](./img/mail4.png)
 
 #### Other Features
 
-- Progress bar + real-time logs
+- Progress bar + real-time logs (with sender tag)
 - Export send results (CSV)
 - Export logs
-- Sender connection test
-- Edit / delete senders
+- Sender connection test / edit / delete
 - Termius Dark theme UI
+- Custom modal dialogs
 
 ### How to Use
 
 1. Enter activation code on first launch
-2. Add SMTP senders in the "Senders" page (requires app password / auth code)
-3. Enter or import recipients in the "Send" page
-4. Compose subject and body (supports HTML and template variables)
+2. Add SMTP senders in "Sender Management" (requires app password)
+3. Enter or import recipients in "Send Email" page
+4. Compose subject and body (supports HTML and templates)
 5. Choose strategy and mode, click Send
 
 ### Disclaimer
 
 - Use responsibly and comply with applicable laws
 - Configure unsubscribe links to reduce complaint risk
-- Start with low volume for new senders, gradually increase
+- Start with low volume for new senders
 - Validate recipients before bulk sending
 
 ---
